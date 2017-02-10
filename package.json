@@ -1,0 +1,25 @@
+{
+  "name": "balance",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kikoku/balance"
+  },
+  "author": "Collin Delphia <candrew022@gmail.com> (http://github.com/kikoku)",
+  "license": "Copyright 2016 Collin Delphia",
+  "homepage": "https://github.com/kikoku/balance",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.8.5"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

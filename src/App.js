@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        Balance
+        {this.props.children}
       </div>
     );
   }

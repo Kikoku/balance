@@ -4,6 +4,8 @@ import {
   IndexRoute
 } from 'react-router';
 
+import RequireAuth from './components/RequireAuth';
+
 import App from './App';
 import HomePage from './components/HomePage';
 import VenuesPage from './components/VenuesPage';
@@ -18,7 +20,7 @@ export default (
     <Route path="venues" component={VenuesPage} />
     <Route path="leagues" component={LeaguesPage} />
     <Route path="events" component={EventsPage} />
-    <Route path="dashboard" component={DashboardPage} />
-    <Route path="login" component={LoginPage} />
+    <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')} />
+    <Route path="login" component={RequireAuth(LoginPage, 'guest')} />
   </Route>
 )

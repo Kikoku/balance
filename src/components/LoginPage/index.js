@@ -125,6 +125,9 @@ const loginMutation = gql`
       }
       organization {
         name
+        roles {
+          name
+        }
       }
     }
   }

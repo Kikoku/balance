@@ -30,15 +30,19 @@ networkInterface.use([{
 }])
 
 const client = new ApolloClient({
-  networkInterface
+  networkInterface,
 });
 
-ReactDOM.render(
+const RootApp = () => (
   <ApolloProvider client={client}>
     <Router
       routes={Routes}
       history={browserHistory}
     />
-  </ApolloProvider>,
+  </ApolloProvider>
+)
+
+ReactDOM.render(
+  <RootApp />,
   document.getElementById('root')
 );

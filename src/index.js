@@ -24,7 +24,7 @@ networkInterface.use([{
     }
 
     const token = localStorage.getItem('access_token');
-    req.options.authorization = token ? token : null;
+    req.options.headers.authorization = token ? token : null;
     next();
   }
 }])

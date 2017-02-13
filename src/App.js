@@ -20,8 +20,8 @@ class App extends Component {
   }
 }
 
-const MyQuery = gql`query MyQuery { viewer { name, roles {name}} }`
+const Viewer = gql`query Viewer { viewer { name, roles {name}} }`
 
-const componentWithData = graphql(MyQuery)(App);
+const componentWithData = graphql(Viewer)(App);
 
 export default componentWithData;

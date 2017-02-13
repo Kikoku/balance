@@ -35,6 +35,9 @@ class NavigationBar extends Component {
             </div>
              <div id="navbar" className={`navbar-collapse collapse ${this.state.collapse ? '' : 'in'}`}>
               <ul className="nav navbar-nav navbar-right">
+                <li style={{color: 'white'}}>
+                  {this.props.viewer ? this.props.viewer.name : ''}
+                </li>
                 <li className={this.props.location.pathname === '/venues' ? 'active' : ''}>
                   <Link to="/venues">
                     <Icon icon="fort-awesome"/> Venues

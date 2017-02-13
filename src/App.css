@@ -2,3 +2,7 @@
   max-height: 100%;
   float: left;
 }
+
+a[disabled] {
+  pointer-events: none;
+}

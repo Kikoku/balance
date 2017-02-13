@@ -13,7 +13,7 @@ class NavigationBar extends Component {
       collapse: true
     }
   }
-  toggleExpand() {
+  _toggleExpand() {
     this.setState({
       collapse: !this.state.collapse
     })
@@ -24,7 +24,7 @@ class NavigationBar extends Component {
         <nav className="navbar navbar-inverse navbar-collapse navbar-fixed-top">
           <div className="container-fluid">
             <div className="navbar-header">
-              <button className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" onClick={()=>this.toggleExpand()}>
+              <button className="navbar-toggle collapsed" data-target="#navbar" onClick={()=>this._toggleExpand()}>
                 <span className="icon-bar"/>
                 <span className="icon-bar"/>
                 <span className="icon-bar"/>
@@ -50,16 +50,30 @@ class NavigationBar extends Component {
                     <Icon icon="calendar" /> Events
                   </Link>
                 </li>
-                <li className={this.props.location.pathname === '/dashboard' ? 'active' : ''}>
-                  <Link to="/dashboard">
-                    <Icon icon="dashboard" /> Dashboard
-                  </Link>
-                </li>
-                <li className={this.props.location.pathname === '/login' ? 'active' : ''}>
-                  <Link to="/login">
-                    <Icon icon="lock" /> Login
-                  </Link>
-                </li>
+                {
+                  this.props.viewer && this.props.viewer.roles.includes({name: 'guest'}) ?
+                    <li className={this.props.location.pathname === '/dashboard' ? 'active' : ''}>
+                      <Link to="/dashboard">
+                        <Icon icon="dashboard" /> Dashboard
+                      </Link>
+                    </li>
+                  :
+                    ''
+                }
+                {
+                  this.props.viewer && this.props.viewer.roles.includes({name: 'guest'}) ?
+                    <li className={this.props.location.pathname === '/login' ? 'active' : ''}>
+                      <Link to="/login">
+                        <Icon icon="unlock-alt" /> Logout
+                      </Link>
+                    </li>
+                  :
+                    <li className={this.props.location.pathname === '/login' ? 'active' : ''}>
+                      <Link to="/login">
+                        <Icon icon="lock" /> Login
+                      </Link>
+                    </li>
+                }
               </ul>
             </div>
           </div>

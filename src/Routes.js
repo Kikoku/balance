@@ -13,6 +13,8 @@ import VenuesContainer from './components/VenuesContainer';
 import VenueContainer from './components/VenueContainer';
 import LeaguesPage from './components/LeaguesPage';
 import EventsPage from './components/EventsPage';
+import EventsContainer from './components/EventsContainer';
+import EventContainer from './components/EventContainer';
 import DashboardPage from './components/DashboardPage'
 import LoginPage from './components/LoginPage'
 
@@ -24,7 +26,10 @@ export default (
       <Route path="/venues/:venueId" component={VenueContainer} />
     </Route>
     <Route path="leagues" component={LeaguesPage} />
-    <Route path="events" component={EventsPage} />
+    <Route path="events" component={EventsPage}>
+      <IndexRoute component={EventsContainer} />
+      <Route path="/events/:eventId" component={EventContainer}/>
+    </Route>
     <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')} />
     <Route path="login" component={RequireAuth(LoginPage, 'guest')} />
   </Route>

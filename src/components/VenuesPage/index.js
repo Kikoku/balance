@@ -4,6 +4,7 @@ import {
   Row
 } from '../Grid';
 import Icon from '../Icon';
+import VenuesContainer from '../VenuesContainer';
 
 const VenuesPage = () => (
   <Container>
@@ -12,6 +13,9 @@ const VenuesPage = () => (
         <h2>
           <Icon icon="fort-awesome"/> Venues
         </h2>
+      </div>
+      <div className="col-xs-12">
+        <VenuesContainer />
       </div>
     </Row>
   </Container>

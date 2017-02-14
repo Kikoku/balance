@@ -17,7 +17,6 @@ import {
 
 class VenueContainer extends React.Component {
   render() {
-    console.log(this.props.data.viewer);
     return (
       <Row>
         <div className="col-xs-12">

@@ -9,11 +9,7 @@ import {
 import gql from 'graphql-tag';
 import VenueNode from '../VenueNode';
 
-const VenuesContainer = ({ data }) => {
-  if (data.viewer) {
-    console.log(data.viewer);
-  }
-  return (
+const VenuesContainer = ({ data }) => (
   <Panel>
     <PanelHeading>
 
@@ -36,7 +32,7 @@ const VenuesContainer = ({ data }) => {
       </tbody>
     </table>
   </Panel>
-)}
+)
 
 const Venues = gql`query Venues {
   viewer {
@@ -51,8 +47,4 @@ const Venues = gql`query Venues {
 }
 ${VenueNode.fragments.venue}`
 
-console.log(Venues);
-
-const componentWithData = graphql(Venues)(VenuesContainer);
-
-export default componentWithData;
+export default graphql(Venues)(VenuesContainer);

@@ -42,22 +42,22 @@ class NavigationBar extends Component {
             </div>
              <div id="navbar" className={`navbar-collapse collapse ${this.state.collapse ? '' : 'in'}`}>
               <ul className="nav navbar-nav navbar-right">
-                <li className={this.props.location.pathname === '/user' ? 'active' : ''} onClick={() => this._collapse()}>
-                  <Link to="/user" disabled={ guest ? true : null}>
+                <li className={this.props.location.pathname.includes('/user') ? 'active' : ''} onClick={() => this._collapse()}>
+                  <Link to={`/venues/${viewer ? viewer.id : null}`} disabled={guest ? true : null}>
                   <Icon icon="user"/> {viewer ? viewer.name : null}
                   </Link>
                 </li>
-                <li className={this.props.location.pathname === '/venues' ? 'active' : ''} onClick={() => this._collapse()}>
+                <li className={this.props.location.pathname.includes('/venues') ? 'active' : ''} onClick={() => this._collapse()}>
                   <Link to="/venues">
                     <Icon icon="fort-awesome"/> Venues
                   </Link>
                 </li>
-                <li className={this.props.location.pathname === '/leagues' ? 'active' : ''} onClick={() => this._collapse()}>
+                <li className={this.props.location.pathname.includes('/leagues') ? 'active' : ''} onClick={() => this._collapse()}>
                   <Link to="/leagues">
                     <Icon icon="tasks" /> Leagues
                   </Link>
                 </li>
-                <li className={this.props.location.pathname === '/events' ? 'active' : ''} onClick={() => this._collapse()}>
+                <li className={this.props.location.pathname.includes('/events') ? 'active' : ''} onClick={() => this._collapse()}>
                   <Link to="/events">
                     <Icon icon="calendar" /> Events
                   </Link>
@@ -66,7 +66,7 @@ class NavigationBar extends Component {
                   guest ?
                     null
                   :
-                    <li className={this.props.location.pathname === '/dashboard' ? 'active' : ''} onClick={() => this._collapse()}>
+                    <li className={this.props.location.pathname.includes('/dashboard') ? 'active' : ''} onClick={() => this._collapse()}>
                       <Link to="/dashboard">
                         <Icon icon="dashboard" /> Dashboard
                       </Link>
@@ -74,13 +74,13 @@ class NavigationBar extends Component {
                 }
                 {
                   guest ?
-                    <li className={this.props.location.pathname === '/login' ? 'active' : ''} onClick={() => this._collapse()}>
+                    <li className={this.props.location.pathname.includes('/login') ? 'active' : ''} onClick={() => this._collapse()}>
                       <Link to="/login">
                         <Icon icon="lock" /> Login
                       </Link>
                     </li>
                   :
-                    <li className={this.props.location.pathname === '/login' ? 'active' : ''} onClick={() => this._collapse()}>
+                    <li className={this.props.location.pathname.includes('/login') ? 'active' : ''} onClick={() => this._collapse()}>
                       <Link to="/login">
                         <Icon icon="unlock-alt" /> Logout
                       </Link>

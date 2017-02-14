@@ -1,19 +1,11 @@
 import React from 'react';
 import {
-  Container,
-  Row
+  Container
 } from '../Grid';
-import Icon from '../Icon';
 
-const EventsPage = () => (
+const EventsPage = ({ children }) => (
   <Container>
-    <Row>
-      <div className="col-xs-12">
-        <h2>
-          <Icon icon="calendar"/> Events
-        </h2>
-      </div>
-    </Row>
+    {children}
   </Container>
 )
 

@@ -42,7 +42,7 @@ class NavigationBar extends Component {
             </div>
              <div id="navbar" className={`navbar-collapse collapse ${this.state.collapse ? '' : 'in'}`}>
               <ul className="nav navbar-nav navbar-right">
-                <li className={this.props.location.pathname.includes('/user') ? 'active' : ''} onClick={() => this._collapse()}>
+                <li onClick={() => this._collapse()}>
                   <Link to={`/venues/${viewer ? viewer.id : null}`} disabled={guest ? true : null}>
                   <Icon icon="user"/> {viewer ? viewer.name : null}
                   </Link>

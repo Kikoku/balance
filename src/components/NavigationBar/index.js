@@ -5,6 +5,7 @@ import logo from '../../balance.png';
 import {
   Container,
 } from '../Grid';
+import Logout from '../Logout';
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -80,10 +81,8 @@ class NavigationBar extends Component {
                       </Link>
                     </li>
                   :
-                    <li className={this.props.location.pathname.includes('/login') ? 'active' : ''} onClick={() => this._collapse()}>
-                      <Link to="/login">
-                        <Icon icon="unlock-alt" /> Logout
-                      </Link>
+                    <li onClick={() => this._collapse()}>
+                      <Logout />
                     </li>
                 }
               </ul>

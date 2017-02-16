@@ -22,7 +22,7 @@ export default (ComposedComponent, AuthScheme = 'admin') => {
         case 'guest':
           if(nextProps.data.viewer.roles.findIndex((role) => role.name === 'guest') === -1) {
 
-            nextProps.router.push('/')
+            nextProps.router.push('/dashboard')
           }
           break;
         default:

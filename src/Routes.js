@@ -16,6 +16,8 @@ import EventsPage from './components/EventsPage';
 import EventsContainer from './components/EventsContainer';
 import EventContainer from './components/EventContainer';
 import DashboardPage from './components/DashboardPage'
+import NewOrganizationPage from './components/NewOrganizationsPage';
+import DashboardProfile from './components/DashboardPage/DashboardProfile';
 import LoginPage from './components/LoginPage'
 
 export default (
@@ -30,7 +32,10 @@ export default (
       <IndexRoute component={EventsContainer} />
       <Route path="/events/:eventId" component={EventContainer}/>
     </Route>
-    <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')} />
+    <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')}>
+      <IndexRoute component={RequireAuth(DashboardProfile)} />
+      <Route path="/dashboard/new-organization" component={RequireAuth(NewOrganizationPage, 'admin')}/>
+    </Route>
     <Route path="login" component={RequireAuth(LoginPage, 'guest')} />
   </Route>
 )

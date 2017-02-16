@@ -15,12 +15,12 @@ const EventsContainer = ({ data }) => {
   console.log(data);
   return (
   <Row>
-    <div className="col-xs-12">
+    <div className="col-sm-12">
       <h2>
         <Icon icon="calendar"/> Events
       </h2>
     </div>
-    <div className="col-xs-12">
+    <div className="col-sm-12">
       <Panel>
         <PanelHeading>
 

@@ -19,7 +19,7 @@ class VenueContainer extends React.Component {
   render() {
     return (
       <Row>
-        <div className="col-xs-12">
+        <div className="col-sm-12">
           <h2>
             <Icon icon="fort-awesome"/> <Link to="/venues">Venues</Link>
             {
@@ -30,7 +30,7 @@ class VenueContainer extends React.Component {
             }
           </h2>
         </div>
-        <div className="col-xs-12">
+        <div className="col-sm-12">
           <Panel>
             <PanelHeading>
             </PanelHeading>

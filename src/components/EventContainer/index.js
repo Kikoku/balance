@@ -20,7 +20,7 @@ class EventContainer extends React.Component {
   render() {
     return (
       <Row>
-        <div className="col-xs-12">
+        <div className="col-sm-12">
           <h2>
             <Icon icon="calendar"/> <Link to="/events">Events</Link>
             {
@@ -31,7 +31,7 @@ class EventContainer extends React.Component {
             }
           </h2>
         </div>
-        <div className="col-xs-12">
+        <div className="col-sm-12">
           <Panel>
             <PanelHeading>
             </PanelHeading>

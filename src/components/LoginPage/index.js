@@ -61,14 +61,14 @@ class LoginPage extends Component {
     return (
       <Container>
         <Row>
-          <div className="col-xs-12">
+          <div className="col-sm-12">
             <h2>
               <Icon icon="lock"/> Login
             </h2>
           </div>
         </Row>
         <Row>
-          <div className="col-xs-12">
+          <div className="col-sm-12">
             <form
               onSubmit={(e) => this._handleSubmit(e)}
             >

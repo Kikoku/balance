@@ -8,7 +8,7 @@ import Icon from '../Icon';
 const LeaguesPage = () => (
   <Container>
     <Row>
-      <div className="col-xs-12">
+      <div className="col-sm-12">
         <h2>
           <Icon icon="tasks"/> Leagues
         </h2>

@@ -13,12 +13,12 @@ import VenueNode from '../VenueNode';
 
 const VenuesContainer = ({ data }) => (
   <Row>
-    <div className="col-xs-12">
+    <div className="col-sm-12">
       <h2>
         <Icon icon="fort-awesome"/> Venues
       </h2>
     </div>
-    <div className="col-xs-12">
+    <div className="col-sm-12">
       <Panel>
         <PanelHeading>
 

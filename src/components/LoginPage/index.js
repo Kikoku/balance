@@ -56,7 +56,7 @@ class LoginPage extends Component {
 
   render() {
 
-    let { name, password } = this.state
+    let { email, password } = this.state
 
     return (
       <Container>
@@ -80,7 +80,7 @@ class LoginPage extends Component {
                   className="form-control"
                   type="text"
                   name="email"
-                  value={name}
+                  value={email}
                   onChange={(e) => this._handleChange(e)}
                   placeholder="email@balance.com"
                 />

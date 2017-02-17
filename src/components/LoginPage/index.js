@@ -19,7 +19,8 @@ class LoginPage extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: null
     }
   }
 
@@ -39,16 +40,19 @@ class LoginPage extends Component {
       updateQueries: {
         Viewer: (prev, { mutationResult }) => {
           const viewer = mutationResult.data.login.organization;
-          return update(prev, {
-            viewer: {
-              $set: viewer
-            }
-          })
+          const { error } = mutationResult.data.login;
+          if (error || true) {
+            return update(prev, {
+              viewer: {
+                $set: viewer
+              }
+            })
+          }
         }
       }
     })
     .then(({ data }) => {
-      localStorage.setItem('access_token', data.login.token.access_token)
+      data.login.error || true ? localStorage.setItem('access_token', data.login.token.access_token) : null;
     }).catch(error => {
       console.log('error');
     })
@@ -120,6 +124,7 @@ const loginMutation = gql`
       email: $email,
       password: $password
     }) {
+      error
       token {
         access_token
       }

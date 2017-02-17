@@ -15,14 +15,14 @@ export default (ComposedComponent, AuthScheme = 'admin') => {
           }
           break;
         case 'organization':
-          if(nextProps.data.viewer.roles.findIndex((role) => role.name === 'admin') === -1) {
+          if(nextProps.data.viewer.roles.findIndex((role) => role.name === 'organization') === -1) {
             nextProps.router.push('/login')
           }
           break;
         case 'guest':
           if(nextProps.data.viewer.roles.findIndex((role) => role.name === 'guest') === -1) {
 
-            nextProps.router.push('/dashboard')
+            nextProps.router.push('/')
           }
           break;
         default:

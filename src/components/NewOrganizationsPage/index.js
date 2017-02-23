@@ -60,7 +60,6 @@ class NewOrganizationPage extends Component {
         organization: organization,
         error:error
       })
-      console.log(self.state);
     }).catch(error => {
       console.error(error);
     })

@@ -28,7 +28,7 @@ const DashboardNav = ({ location, viewer }) => {
         New Leauge
       </Link>
     </li>
-    <li className={location.pathname.includes('new-league') ? 'active' : null}>
+    <li className={location.pathname.includes('new-event') ? 'active' : null}>
       <Link to="/dashboard/new-event">
         New Event
       </Link>

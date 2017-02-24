@@ -1,20 +1,11 @@
-import React, { Component } from 'react';
-import {
-  graphql,
-} from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react';
 import {
   Panel,
   PanelHeading,
   PanelBody,
   Row,
-  InputGroup,
-  InputGroupAddon
 } from '../Grid';
 import Icon from '../Icon';
-import {
-  Link,
-} from 'react-router';
 import DashboardNav from '../DashboardPage/DashboardNav';
 
 const DashboardProfile = ({ location, data }) => (
@@ -37,7 +28,6 @@ const DashboardProfile = ({ location, data }) => (
           </PanelBody>
         </Panel>
       </div>
-
     </Row>
 )
 

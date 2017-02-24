@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Link
 } from 'react-router'
@@ -10,10 +10,8 @@ import Icon from '../Icon';
 import update from 'immutability-helper';
 
 const Logout = ({mutate}) => {
-  console.log(mutate);
   return (
   <Link to="/" onClick={(e) => {
-    const self = this;
     mutate({
       variables: {
         organization: 'logout'

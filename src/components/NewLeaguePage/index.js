@@ -50,7 +50,6 @@ class NewLeaguePage extends Component {
   _handleSubmit(e) {
     const self = this;
     const { title, startdate, enddate } = this.state;
-    console.log(typeof startdate)
     e.preventDefault();
     this.props.mutate({
       variables: {

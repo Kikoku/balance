@@ -5,15 +5,9 @@ import {
 } from '../Grid';
 import Icon from '../Icon';
 
-const LeaguesPage = () => (
+const LeaguesPage = ({children}) => (
   <Container>
-    <Row>
-      <div className="col-sm-12">
-        <h2>
-          <Icon icon="tasks"/> Leagues
-        </h2>
-      </div>
-    </Row>
+    {children}
   </Container>
 )
 

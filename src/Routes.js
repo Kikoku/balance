@@ -12,6 +12,8 @@ import VenuesPage from './components/VenuesPage';
 import VenuesContainer from './components/VenuesContainer';
 import VenueContainer from './components/VenueContainer';
 import LeaguesPage from './components/LeaguesPage';
+import LeagueContainer from './components/LeagueContainer';
+import LeaguesContainer from './components/LeaguesContainer';
 import EventsPage from './components/EventsPage';
 import EventsContainer from './components/EventsContainer';
 import EventContainer from './components/EventContainer';
@@ -28,7 +30,10 @@ export default (
       <IndexRoute component={VenuesContainer} />
       <Route path="/venues/:venueId" component={VenueContainer} />
     </Route>
-    <Route path="leagues" component={LeaguesPage} />
+    <Route path="leagues" component={LeaguesPage}>
+      <IndexRoute component={LeaguesContainer}/>
+      <Route path="/leagues/:leagueId" component={LeagueContainer}/>
+    </Route>
     <Route path="events" component={EventsPage}>
       <IndexRoute component={EventsContainer} />
       <Route path="/events/:eventId" component={EventContainer}/>

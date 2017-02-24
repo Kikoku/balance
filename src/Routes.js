@@ -20,6 +20,7 @@ import EventContainer from './components/EventContainer';
 import DashboardPage from './components/DashboardPage';
 import NewOrganizationPage from './components/NewOrganizationsPage';
 import NewLeaguePage from './components/NewLeaguePage';
+import NewEventPage from './components/NewEventPage';
 import DashboardProfile from './components/DashboardPage/DashboardProfile';
 import LoginPage from './components/LoginPage';
 
@@ -42,6 +43,7 @@ export default (
       <IndexRoute component={RequireAuth(DashboardProfile)} />
       <Route path="/dashboard/new-organization" component={RequireAuth(NewOrganizationPage, 'admin')}/>
       <Route path="/dashboard/new-league" component={RequireAuth(NewLeaguePage, 'organization')}/>
+      <Route path="/dashboard/new-event" component={RequireAuth(NewEventPage, 'organization')}/>
     </Route>
     <Route path="login" component={RequireAuth(LoginPage, 'guest')} />
   </Route>

@@ -40,7 +40,7 @@ export default (
       <Route path="/events/:eventId" component={EventContainer}/>
     </Route>
     <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')}>
-      <IndexRoute component={RequireAuth(DashboardProfile)} />
+      <IndexRoute component={RequireAuth(DashboardProfile, 'organization')} />
       <Route path="/dashboard/new-organization" component={RequireAuth(NewOrganizationPage, 'admin')}/>
       <Route path="/dashboard/new-league" component={RequireAuth(NewLeaguePage, 'organization')}/>
       <Route path="/dashboard/new-event" component={RequireAuth(NewEventPage, 'organization')}/>

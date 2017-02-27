@@ -38,7 +38,7 @@ export default (ComposedComponent, AuthScheme = 'admin') => {
     }
   }
 
-  const Viewer = gql`query Viewer { viewer { name, roles {name}} }`
+  const Viewer = gql`query Viewer { viewer { id, name, roles {name}} }`
 
   const componentWithData = graphql(Viewer)(Authentication);
 

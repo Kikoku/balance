@@ -20,8 +20,9 @@ import DashboardNav from '../DashboardPage/DashboardNav';
 import {
   mountNewFile
 } from './updateHelper'
+import LeagueSelect from './LeagueSelect';
 
-class NewLeaguePage extends Component {
+class NewEventPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -61,22 +62,27 @@ class NewLeaguePage extends Component {
   }
 
   _handleSubmit(e) {
-    const { event, logs, players, matches, leagueId } = this.state;
+    let { event, logs, players, matches, leagueId, filename } = this.state;
+    event = {
+      ...event,
+      iscasuallreportonly: event.iscasuallreportonly ? event.iscasuallreportonly : false
+    };
+
     const self = this;
     e.preventDefault();
     this.props.mutate({
-      variable: {
+      variables: {
         leagueId,
         event,
-        logs,
-        players,
-        matches
+        logs:[],
+        players: [],
+        matches: []
       }
     }).then(({ data }) => {
       const { event, error } = data.newEvent;
       self.setState({
         filename: '',
-        error: '',
+        error: error,
         event: '',
         logs: '',
         players: '',
@@ -151,6 +157,7 @@ class NewLeaguePage extends Component {
                     value={this.state.filename}
                     className="form-control"
                     style={{backgroundColor: '#fff'}}
+                    placeholder="example.wer"
                     readOnly
                   />
                   <InputGroupButton>
@@ -166,13 +173,13 @@ class NewLeaguePage extends Component {
                   <InputGroupAddon>
                     <Icon icon="tasks" />
                   </InputGroupAddon>
-                  <select
-                    className="form-control"
-                  >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
+                  {
+                    viewer
+                    ?
+                      <LeagueSelect org={viewer} _handleChange={(e) => this._handleChange(e)}/>
+                    :
+                    <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
+                  }
                 </InputGroup>
                 <InputGroup>
                   <InputGroupAddon>
@@ -241,4 +248,27 @@ class NewLeaguePage extends Component {
   }
 }
 
-export default NewLeaguePage;
+const newEventMutation = gql`
+  mutation NewEvent(
+    $event: EventInput!,
+    $leagueId: String!,
+    $logs: [LogInput]!,
+    $players: [PlayerInput]!,
+    $matches: [MatchInput]!
+  ) {
+    newEvent(input: {
+      event: $event,
+      leagueId: $leagueId,
+      logs: $logs,
+      players: $players,
+      matches: $matches
+    }) {
+      error
+      event {
+        title
+      }
+    }
+  }
+`
+
+export default graphql(newEventMutation)(NewEventPage);

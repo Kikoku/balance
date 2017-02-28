@@ -21,7 +21,6 @@ import {
 
 class LeagueContainer extends React.Component {
   render() {
-    console.log(this.props);
     const { loading, viewer } = this.props.data;
     return (
       <Row>

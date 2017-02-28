@@ -7,13 +7,16 @@ import {
 const ResultNodeHeading = () => (
   <ListGroupItem>
     <Row>
-      <div className="col-sm-4 col-xs-6">
+      <div className="col-xs-1 text-center">
+        #
+      </div>
+      <div className="col-xs-4">
         Player
       </div>
-      <div className="col-sm-4 hidden-xs">
-        Win | Loss | Draw
+      <div className="col-xs-3 text-center">
+        W | L | D
       </div>
-      <div className="col-sm-4 col-xs-6">
+      <div className="col-xs-4">
         Elo
       </div>
     </Row>

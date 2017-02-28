@@ -14,10 +14,11 @@ import {
 import gql from 'graphql-tag';
 import LeagueNode from '../LeagueNode';
 import LeagueEventNode from '../LeagueEventNode';
-import LeagueResultNode from '../LeagueResultNode';
+import ResultNode from '../ResultNode';
 import {
   Link,
 } from 'react-router';
+import ResultPanel from '../ResultPanel';
 
 class LeagueContainer extends React.Component {
   render() {
@@ -45,35 +46,13 @@ class LeagueContainer extends React.Component {
           </Panel>
         </div>
         <div className="col-sm-12">
-          <Panel>
-            <PanelHeading>
-              <Icon icon="sort-numeric-asc"/> Results
-            </PanelHeading>
-            <ListGroup>
-              <ListGroupItem>
-                <Row>
-                  <div className="col-sm-4 col-xs-6">
-                    Player
-                  </div>
-                  <div className="col-sm-4 hidden-xs">
-                    Win | Loss | Draw
-                  </div>
-                  <div className="col-sm-4 col-xs-6">
-                    Elo
-                  </div>
-                </Row>
-              </ListGroupItem>
-              {
-                !loading
-                ?
-                  viewer.league.users.edges.map(user => <LeagueResultNode {...user.node}/> )
-                :
-                  <ListGroupItem>
-                    <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
-                  </ListGroupItem>
-              }
-            </ListGroup>
-          </Panel>
+          {
+            !loading
+            ?
+              <ResultPanel users={viewer.league.users.edges} />
+            :
+            <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
+          }
         </div>
         <div className="col-sm-12">
           <Panel>
@@ -126,7 +105,7 @@ const League = gql`
         users {
           edges {
             node {
-              ...LeagueResultNode
+              ...ResultNode
             }
           }
         }
@@ -135,7 +114,7 @@ const League = gql`
   }
   ${LeagueNode.fragments.league}
   ${LeagueEventNode.fragments.events}
-  ${LeagueResultNode.fragments.results}
+  ${ResultNode.fragments.results}
 `
 
 export default graphql(League, {

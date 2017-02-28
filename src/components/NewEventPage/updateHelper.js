@@ -54,8 +54,18 @@ export const mountNewFile = (file) => {
       title
     } = res.event;
     return {
-      logs: log.entry,
-      players: participation.person,
+      logs: log.entry.map(({_, date, operation}) => ({
+        WERInfo: _,
+        date,
+        operation
+      })),
+      players: participation.person.map(({first, middle, last, id, country}) => ({
+        first,
+        last,
+        middle,
+        dci: id,
+        country
+      })),
       matches: matches.round.reduce(
         ( accumulator, currentValue ) => (
           accumulator.concat(
@@ -64,8 +74,14 @@ export const mountNewFile = (file) => {
                 ...match,
                 PlayFormat: currentValue.PlayFormat,
                 date: currentValue.date,
-                round: currentValue.number,
-                teamformat: currentValue.teamformat
+                round: parseInt(currentValue.number,10),
+                number: parseInt(currentValue.number,10),
+                win: parseInt(match.win,10),
+                loss: parseInt(match.loss,10),
+                draw: parseInt(match.draw,10),
+                outcome: parseInt(match.outcome,10),
+                teamformat: /true/i.test(currentValue.teamformat),
+                winbydrop: /true/i.test(match.windbydrop),
               })
             )
           )

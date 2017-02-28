@@ -12,7 +12,6 @@ import gql from 'graphql-tag';
 import EventNode from '../EventNode';
 
 const EventsContainer = ({ data }) => {
-  console.log(data);
   return (
   <Row>
     <div className="col-sm-12">
@@ -29,10 +28,10 @@ const EventsContainer = ({ data }) => {
           <tbody>
             <tr>
               <th>
-                Start Date
+                title
               </th>
               <th>
-                title
+                Start Date
               </th>
               <th>
                 Organization

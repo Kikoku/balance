@@ -9,12 +9,12 @@ const EventNode = ({ event }) => {
   return (
     <tr>
       <td>
-        {event.startdate}
-      </td>
-      <td>
         <Link to={`/events/${event.id}`}>
           {event.title}
         </Link>
+      </td>
+      <td>
+        {event.startdate}
       </td>
       <td>
         <Link to={`/venues/${event.organization.id}`}>

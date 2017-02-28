@@ -5,7 +5,7 @@ import {
   PanelBody,
   Row,
   InputGroup,
-  InputGroupAddon
+  InputGroupAddon,
 } from '../Grid';
 import Icon from '../Icon';
 import {
@@ -15,17 +15,19 @@ import gql from 'graphql-tag';
 import {
   Link,
 } from 'react-router';
+import ResultPanel from '../ResultPanel';
 
 class EventContainer extends React.Component {
   render() {
+    const { loading, viewer } = this.props.data;
     return (
       <Row>
         <div className="col-sm-12">
           <h2>
             <Icon icon="calendar"/> <Link to="/events">Events</Link>
             {
-              !this.props.data.loading ?
-                ` / ${this.props.data.viewer.event.title}`
+              !loading ?
+                ` / ${viewer.event.title}`
               :
                 <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
             }
@@ -45,7 +47,7 @@ class EventContainer extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      value={!this.props.data.loading ? this.props.data.viewer.event.startdate : 'Loading'}
+                      value={!loading ? viewer.event.startdate : 'Loading'}
                       disabled={true}
                     />
                   </InputGroup>
@@ -58,7 +60,7 @@ class EventContainer extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      value={!this.props.data.loading ? this.props.data.viewer.event.sanctionnumber : 'Loading'}
+                      value={!loading ? viewer.event.sanctionnumber : 'Loading'}
                       disabled={true}
                     />
                   </InputGroup>
@@ -71,36 +73,63 @@ class EventContainer extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      value={!this.props.data.loading ? this.props.data.viewer.event.eventguid : 'Loading'}
+                      value={!loading ? viewer.event.eventguid : 'Loading'}
                       disabled={true}
                     />
                   </InputGroup>
                 </div>
-
               </Row>
             </PanelBody>
           </Panel>
+        </div>
+        <div className="col-sm-12">
+          {
+            !loading
+            ?
+              <ResultPanel users={viewer.event.results.edges} />
+            :
+            <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
+          }
         </div>
       </Row>
     )
   }
 }
 
-const Event = gql`query Event($id: ID!) {
-  viewer {
-    event(id: $id) {
-      id
-      eventguid,
-      title,
-      startdate,
-      sanctionnumber,
-      organization {
+const Event = gql`
+  query Event($id: ID!) {
+    viewer {
+      event(id: $id) {
         id
-        name
+        eventguid,
+        title,
+        startdate,
+        sanctionnumber,
+        organization {
+          id
+          name
+        }
+        results {
+          edges {
+            node {
+              id
+              person {
+                first
+                last
+                middle
+              }
+              win
+              loss
+              draw
+              elo
+              change
+            }
+          }
+        }
       }
     }
   }
-}`
+`
 
 export default graphql(Event, {
   options: ({ routeParams: { eventId } }) => ({

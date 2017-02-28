@@ -17,10 +17,7 @@ import {
 import LeagueNode from '../LeagueNode';
 import LeaguesPanel from '../LeaguesPanel';
 
-const VenueContainer = ({ data }) => {
-  console.log('data');
-  console.log(data);
-  return (
+const VenueContainer = ({ data }) => (
   <Row>
     <div className="col-sm-12">
       <h2>
@@ -50,7 +47,7 @@ const VenueContainer = ({ data }) => {
       />
     </div>
   </Row>
-)}
+)
 
 const Venue = gql`
   query Venue($id: ID!) {

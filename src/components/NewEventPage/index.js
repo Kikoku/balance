@@ -74,9 +74,9 @@ class NewEventPage extends Component {
       variables: {
         leagueId,
         event,
-        logs:[],
-        players: [],
-        matches: []
+        logs,
+        players,
+        matches
       }
     }).then(({ data }) => {
       const { event, error } = data.newEvent;

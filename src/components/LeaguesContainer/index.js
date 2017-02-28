@@ -9,6 +9,7 @@ import {
   graphql,
 } from 'react-apollo';
 import gql from 'graphql-tag';
+import LeaguesPanel from '../LeaguesPanel';
 import LeagueNode from '../LeagueNode';
 
 const LeaguesContainer = ({ data }) => (
@@ -19,46 +20,28 @@ const LeaguesContainer = ({ data }) => (
       </h2>
     </div>
     <div className="col-sm-12">
-      <Panel>
-        <PanelHeading>
-
-        </PanelHeading>
-        <table className="table">
-          <tbody>
-            <tr>
-              <th>
-                Title
-              </th>
-              <th>
-                Start Date
-              </th>
-              <th>
-                End Date
-              </th>
-            </tr>
-            {data.loading ? <tr><td>Loading</td></tr> : null }
-            {data.error ? <tr><td>ERROR</td></tr> : null}
-            {
-              data.viewer ? data.viewer.leagues.edges.map((league, key) => <LeagueNode key={key} league={league.node} />) : null
-            }
-          </tbody>
-        </table>
-      </Panel>
+      <LeaguesPanel
+        loading={data.loading}
+        error={data.error}
+        viewer={data.viewer}
+      />
     </div>
   </Row>
 )
 
-const Leagues = gql`query Leagues {
-  viewer {
-    leagues {
-      edges {
-        node {
-          ...LeaguesContainerLeague
+const Leagues = gql`
+  query Leagues {
+    viewer {
+      leagues {
+        edges {
+          node {
+            ...LeaguesContainerLeague
+          }
         }
       }
     }
   }
-}
-${LeagueNode.fragments.league}`
+  ${LeagueNode.fragments.league}
+`
 
 export default graphql(Leagues)(LeaguesContainer);

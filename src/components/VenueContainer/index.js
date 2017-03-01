@@ -43,7 +43,7 @@ const VenueContainer = ({ data }) => (
       <LeaguesPanel
         loading={data.loading}
         error={data.error}
-        viewer={data.viewer}
+        leagues={data.viewer ? data.viewer.organization.leagues : null}
       />
     </div>
   </Row>

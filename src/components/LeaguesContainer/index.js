@@ -23,7 +23,7 @@ const LeaguesContainer = ({ data }) => (
       <LeaguesPanel
         loading={data.loading}
         error={data.error}
-        viewer={data.viewer}
+        leagues={data.viewer ? data.viewer.leagues : null}
       />
     </div>
   </Row>

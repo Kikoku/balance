@@ -16,6 +16,7 @@ import {
 } from 'react-router';
 import LeagueNode from '../LeagueNode';
 import LeaguesPanel from '../LeaguesPanel';
+import EventNode from '../EventNode';
 
 const VenueContainer = ({ data }) => (
   <Row>
@@ -46,6 +47,33 @@ const VenueContainer = ({ data }) => (
         leagues={data.viewer ? data.viewer.organization.leagues : null}
       />
     </div>
+    <div className="col-sm-12">
+      <Panel>
+        <PanelHeading>
+          <Icon icon="calendar"/> Events
+        </PanelHeading>
+        <table className="table">
+          <tbody>
+            <tr>
+              <th>
+                title
+              </th>
+              <th>
+                Start Date
+              </th>
+              <th>
+                Organization
+              </th>
+            </tr>
+            {data.loading ? <tr><td>Loading</td></tr> : null }
+            {data.error ? <tr><td>ERROR</td></tr> : null}
+            {
+              data.viewer ? data.viewer.organization.events.edges.map((event, key) => <EventNode key={key} event={event.node} />) : null
+            }
+          </tbody>
+        </table>
+      </Panel>
+    </div>
   </Row>
 )
 
@@ -61,11 +89,19 @@ const Venue = gql`
             }
           }
         }
+        events {
+          edges {
+            node {
+              ...EventsContainerEvent
+            }
+          }
+        }
       }
     }
   }
   ${VenueNode.fragments.venue}
   ${LeagueNode.fragments.league}
+  ${EventNode.fragments.event}
 `
 
 export default graphql(Venue, {

@@ -25,7 +25,7 @@ const LeagueNode = ({ league }) => {
 
 LeagueNode.fragments = {
   league: gql`
-    fragment LeaguesContainerLeague on League {
+    fragment LeaguesContainerNode on League {
       id,
       title,
       startdate,

@@ -21,7 +21,7 @@ const VenuesContainer = ({ data }) => (
     <div className="col-sm-12">
       <Panel>
         <PanelHeading>
-
+          <Icon icon="fort-awesome" /> Venues
         </PanelHeading>
         <table className="table">
           <tbody>

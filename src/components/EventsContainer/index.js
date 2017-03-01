@@ -22,7 +22,7 @@ const EventsContainer = ({ data }) => {
     <div className="col-sm-12">
       <Panel>
         <PanelHeading>
-
+          <Icon icon="calendar"/> Events
         </PanelHeading>
         <table className="table">
           <tbody>

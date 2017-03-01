@@ -3,12 +3,13 @@ import {
   Panel,
   PanelHeading,
 } from '../Grid';
+import Icon from '../Icon';
 import LeagueNode from '../LeagueNode';
 
 const LeaguesPanel = ({loading, error, leagues}) => (
   <Panel>
     <PanelHeading>
-
+      <Icon icon="tasks" /> Leagues
     </PanelHeading>
     <table className="table">
       <tbody>

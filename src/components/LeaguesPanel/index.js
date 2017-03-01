@@ -5,11 +5,7 @@ import {
 } from '../Grid';
 import LeagueNode from '../LeagueNode';
 
-const LeaguesPanel = ({loading, error, viewer}) => {
-  console.log('panel');
-  console.log('viewer');
-  console.log(viewer);
-  return (
+const LeaguesPanel = ({loading, error, leagues}) => (
   <Panel>
     <PanelHeading>
 
@@ -30,11 +26,11 @@ const LeaguesPanel = ({loading, error, viewer}) => {
         {loading ? <tr><td>Loading</td></tr> : null }
         {error ? <tr><td>ERROR</td></tr> : null}
         {
-          viewer ? viewer.leagues.edges.map((league, key) => <LeagueNode key={key} league={league.node} />) : null
+          leagues ? leagues.edges.map((league, key) => <LeagueNode key={key} league={league.node} />) : null
         }
       </tbody>
     </table>
   </Panel>
-)}
+)
 
 export default LeaguesPanel;

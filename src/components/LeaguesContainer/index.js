@@ -35,7 +35,7 @@ const Leagues = gql`
       leagues {
         edges {
           node {
-            ...LeaguesContainerLeague
+            ...LeaguesContainerNode
           }
         }
       }

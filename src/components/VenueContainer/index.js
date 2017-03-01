@@ -57,7 +57,7 @@ const Venue = gql`
         leagues {
           edges {
             node {
-              ...LeaguesContainerLeague
+              ...LeaguesContainerNode
             }
           }
         }

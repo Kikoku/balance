@@ -94,7 +94,7 @@ const League = gql`
   query League($id: ID!) {
     viewer {
       league(id: $id) {
-        ...LeaguesContainerLeague
+        ...LeaguesContainerNode
         events {
           edges {
             node {

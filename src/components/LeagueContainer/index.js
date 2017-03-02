@@ -112,6 +112,7 @@ export default graphql(League, {
   options: ({ routeParams: { leagueId } }) => ({
     variables: {
       id: leagueId
-    }
+    },
+    forceFetch: true
   })
 })(LeagueContainer);

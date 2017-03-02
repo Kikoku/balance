@@ -14,7 +14,7 @@ import {
 } from 'react-apollo';
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:8080'
+  uri: process.env.NETWORK_INTERFACE_URI || 'http://localhost:8080'
 })
 
 networkInterface.use([{

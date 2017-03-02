@@ -80,7 +80,8 @@ export default graphql(CurrentOrgLeaguesForLayout, {
     return {
       variables: {
         orgId: props.org.id
-      }
+      },
+      forceFetch: true
     }
   }
 })(LeagueSelect);

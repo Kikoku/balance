@@ -14,7 +14,7 @@ import {
 } from 'react-apollo';
 
 const networkInterface = createNetworkInterface({
-  uri: process.env.NETWORK_INTERFACE_URI || 'http://localhost:8080'
+  uri: 'https://fast-garden-57622.herokuapp.com/'
 })
 
 networkInterface.use([{

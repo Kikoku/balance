@@ -20,15 +20,22 @@ import DashboardNav from '../DashboardPage/DashboardNav';
 class NewLeaguePage extends Component {
   constructor(props) {
     super(props)
-    let today = new Date();
-    today = `${(today.getFullYear())}-${this._handleSingleValue((today.getMonth() +1))}-${this._handleSingleValue(today.getDate())}`
+    const today = new Date();
+    let offsetDate = new Date();
+    offsetDate.setDate(offsetDate.getDate() + 30);
+    this.today = this._formatDate(today)
+    this.offsetDate = this._formatDate(offsetDate);
     this.state = {
       title: '',
-      startdate: today,
-      enddate: today,
+      startdate: this.today,
+      enddate: this.offsetDate,
       error: null,
       league: null
     }
+  }
+
+  _formatDate(date) {
+    return `${(date.getFullYear())}-${this._handleSingleValue((date.getMonth() +1))}-${this._handleSingleValue(date.getDate())}`;
   }
 
   _handleSingleValue(value) {
@@ -62,8 +69,8 @@ class NewLeaguePage extends Component {
       const { league, error } = data.newLeague;
       self.setState({
         title: '',
-        startdate: '',
-        enddate: '',
+        startdate: this.today,
+        enddate: this.offsetDate,
         league: league,
         error: error
       })

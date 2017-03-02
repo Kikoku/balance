@@ -68,7 +68,6 @@ class NewEventPage extends Component {
       iscasuallreportonly: event.iscasuallreportonly ? event.iscasuallreportonly : false
     };
 
-    const self = this;
     e.preventDefault();
     this.props.mutate({
       variables: {
@@ -80,16 +79,22 @@ class NewEventPage extends Component {
       }
     }).then(({ data }) => {
       const { event, error } = data.newEvent;
-      self.setState({
-        filename: '',
-        error: error,
-        event: '',
-        logs: '',
-        players: '',
-        matches: '',
-        leagueId: this.state.leagueId,
-        uploaded: event.title
-      })
+      if (error) {
+        this.setState({
+          error: error
+        })
+      } else {
+        this.setState({
+          filename: '',
+          error: error,
+          event: '',
+          logs: '',
+          players: '',
+          matches: '',
+          leagueId: this.state.leagueId,
+          uploaded: event.title
+        })
+      }
     }).catch(error => {
       console.error(error)
     })

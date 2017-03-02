@@ -21,6 +21,7 @@ import {
   mountNewFile
 } from './updateHelper'
 import LeagueSelect from './LeagueSelect';
+import EventNode from '../EventNode'
 
 class NewEventPage extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class NewEventPage extends Component {
           players: '',
           matches: '',
           leagueId: this.state.leagueId,
-          uploaded: event.title
+          uploaded: event
         })
       }
     }).catch(error => {
@@ -102,7 +103,7 @@ class NewEventPage extends Component {
 
   render() {
     const { viewer } = this.props.data;
-    const { error, upload, filename, event, players, matches, leagueId, logs } = this.state;
+    const { error, upload, filename, event, players, matches, leagueId, logs, uploaded } = this.state;
     return (
       <Row>
         <div className="col-sm-12">
@@ -141,7 +142,7 @@ class NewEventPage extends Component {
                      <button className="close" onClick={() => this._handleClose('uploaded')}>
                        <Icon icon="times" />
                      </button>
-                      <strong>Success!</strong> <em>{this.state.uploaded}</em> has been created!
+                      <strong>Success!</strong> <Link to={`/events/${uploaded.id}`}><em>{uploaded.title}</em></Link> has been created!
                     </div>
                   :
                     null
@@ -270,10 +271,11 @@ const newEventMutation = gql`
     }) {
       error
       event {
-        title
+        ...EventsContainerEvent
       }
     }
   }
+  ${EventNode.fragments.event}
 `
 
 export default graphql(newEventMutation)(NewEventPage);

@@ -112,7 +112,7 @@ class NewLeaguePage extends Component {
                      <button className="close" onClick={() => this._handleClose('league')}>
                        <Icon icon="times" />
                      </button>
-                      <strong>Success!</strong> <em>{this.state.league.title}</em> has been created!
+                      <strong>Success!</strong> <Link to={`/leagues/${this.state.league.id}`}><em>{this.state.league.title}</em></Link> has been created!
                     </div>
                   :
                     null
@@ -185,6 +185,7 @@ const newLeagueMutation = gql`
     }) {
       error
       league {
+        id
         title
       }
     }

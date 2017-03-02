@@ -87,7 +87,7 @@ class NewEventPage extends Component {
         logs: '',
         players: '',
         matches: '',
-        leagueId: '',
+        leagueId: this.state.leagueId,
         uploaded: event.title
       })
     }).catch(error => {

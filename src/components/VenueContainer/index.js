@@ -24,7 +24,7 @@ const VenueContainer = ({ data }) => (
       <h2>
         <Icon icon="fort-awesome"/> <Link to="/venues">Venues</Link>
         {
-          !data.loading ?
+          !data.loading && data.viewer ?
             ` / ${data.viewer.organization.name}`
           :
             <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />

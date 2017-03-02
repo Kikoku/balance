@@ -24,6 +24,12 @@ class LoginPage extends Component {
     }
   }
 
+  _handleClose(alertType) {
+    this.setState({
+      [alertType]: null
+    })
+  }
+
   _handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -31,6 +37,7 @@ class LoginPage extends Component {
   }
 
   _handleSubmit(e) {
+    const self = this;
     e.preventDefault();
     this.props.mutate({
       variables: {
@@ -41,7 +48,7 @@ class LoginPage extends Component {
         Viewer: (prev, { mutationResult }) => {
           const viewer = mutationResult.data.login.organization;
           const { error } = mutationResult.data.login;
-          if (error || true) {
+          if (!error) {
             return update(prev, {
               viewer: {
                 $set: viewer
@@ -52,7 +59,13 @@ class LoginPage extends Component {
       }
     })
     .then(({ data }) => {
-      data.login.error || true ? localStorage.setItem('access_token', data.login.token.access_token) : null;
+      const { token, error } = data.login;
+      !error ? localStorage.setItem('access_token', token.access_token) : null;
+      this.setState({
+        email: '',
+        password: '',
+        error
+      })
     }).catch(error => {
       console.log('error');
     })
@@ -60,7 +73,7 @@ class LoginPage extends Component {
 
   render() {
 
-    let { email, password } = this.state
+    let { email, password, error } = this.state
 
     return (
       <Container>
@@ -76,6 +89,18 @@ class LoginPage extends Component {
             <form
               onSubmit={(e) => this._handleSubmit(e)}
             >
+              {
+                error
+                ?
+                  <div className="alert alert-danger">
+                    <button className="close" onClick={() => this._handleClose('error')}>
+                      <Icon icon="times" />
+                    </button>
+                    <strong>Oh Snap!</strong> {error}
+                  </div>
+                :
+                  null
+              }
               <InputGroup>
                 <InputGroupAddon>
                   <Icon icon="at" />

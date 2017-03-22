@@ -38,7 +38,7 @@ class NavigationBar extends Component {
                 <span className="icon-bar"/>
               </button>
               <Link className="navbar-brand" to="/">
-                <img src={logo} role="presentation"/>&nbsp;Balance
+                <img src={logo} role="presentation"/>&nbsp;MTGBalance
               </Link>
             </div>
              <div id="navbar" className={`navbar-collapse collapse ${this.state.collapse ? '' : 'in'}`}>

@@ -19,10 +19,11 @@ import {
   Link,
 } from 'react-router';
 import ResultPanel from '../ResultPanel';
+import update from 'immutability-helper';
 
 class LeagueContainer extends React.Component {
   render() {
-    const { loading, viewer } = this.props.data;
+    const { data: { loading, viewer }, loadMoreEvents, loadMoreUsers } = this.props;
     return (
       <Row>
         <div className="col-sm-12">
@@ -73,6 +74,27 @@ class LeagueContainer extends React.Component {
                     <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
                   </ListGroupItem>
               }
+              {
+                !loading ? viewer.league.events.pageInfo.hasNextPage ?
+                  <ListGroupItem>
+                    <Row>
+                      <div
+                        className="col-md-12"
+                        style={{
+                          textAlign: 'center'
+                        }}
+                      >
+                        <span
+                          className="btn btn-primary"
+                          onClick={loadMoreEvents}
+                        >
+                          Load More...
+                        </span>
+                      </div>
+                    </Row>
+                  </ListGroupItem>
+                : null : null
+              }
             </ListGroup>
           </Panel>
         </div>
@@ -82,22 +104,34 @@ class LeagueContainer extends React.Component {
 }
 
 const League = gql`
-  query League($id: ID!) {
+  query League(
+    $id: ID!,
+    $eCursor: String,
+    $uCursor: String
+  ) {
     viewer {
       league(id: $id) {
         ...LeaguesContainerNode
-        events {
+        events(first: 10, after: $eCursor) {
           edges {
             node {
               ...LeagueEventNode
             }
           }
+          pageInfo{
+            endCursor
+            hasNextPage
+          }
         }
-        users {
+        users(after: $uCursor) {
           edges {
             node {
               ...ResultNode
             }
+          }
+          pageInfo{
+            endCursor
+            hasNextPage
           }
         }
       }
@@ -111,8 +145,71 @@ const League = gql`
 export default graphql(League, {
   options: ({ routeParams: { leagueId } }) => ({
     variables: {
-      id: leagueId
+      id: leagueId,
     },
     forceFetch: true
-  })
+  }),
+  props({ data, data: { fetchMore } }) {
+    return {
+      data,
+      loadMoreEvents: () => {
+        return fetchMore({
+          query: League,
+          variables: {
+            eCursor: data.viewer.league.events.pageInfo.endCursor,
+            id: data.variables.id
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const { edges: newEdges, pageInfo } = fetchMoreResult.data.viewer.league.events;
+            return update(
+              data,
+              {
+                viewer: {
+                  league: {
+                    events: {
+                      edges: {
+                        $push: newEdges
+                      },
+                      pageInfo: {
+                        $set: pageInfo
+                      }
+                    }
+                  }
+                }
+              }
+            )
+          }
+        })
+      },
+      loadMoreUsers: () => {
+        return fetchMore({
+          query: League,
+          variables: {
+            uCursor: data.viewer.league.users.pageInfo.endCursor,
+            id: data.variables.id
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const { edges: newEdges, pageInfo } = fetchMoreResult.data.viewer.league.users;
+            return update(
+              data,
+              {
+                viewer: {
+                  league: {
+                    users: {
+                      edges: {
+                        $push: newEdges
+                      },
+                      pageInfo: {
+                        $set: pageInfo
+                      }
+                    }
+                  }
+                }
+              }
+            )
+          }
+        })
+      }
+    }
+  }
 })(LeagueContainer);

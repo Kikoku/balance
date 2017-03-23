@@ -41,7 +41,7 @@ class LeagueContainer extends React.Component {
           {
             !loading
             ?
-              <ResultPanel users={viewer.league.users.edges} />
+              <ResultPanel users={viewer.league.users.edges} loadMoreUsers={loadMoreUsers} hasNextPage={viewer.league.users.pageInfo.hasNextPage}/>
             :
             <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
           }
@@ -123,7 +123,7 @@ const League = gql`
             hasNextPage
           }
         }
-        users(after: $uCursor) {
+        users(first: 10, after: $uCursor) {
           edges {
             node {
               ...ResultNode

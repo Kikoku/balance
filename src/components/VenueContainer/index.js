@@ -17,8 +17,9 @@ import {
 import LeagueNode from '../LeagueNode';
 import LeaguesPanel from '../LeaguesPanel';
 import EventNode from '../EventNode';
+import update from 'immutability-helper';
 
-const VenueContainer = ({ data }) => (
+const VenueContainer = ({ data, loadMoreEvents }) => (
   <Row>
     <div className="col-sm-12">
       <h2>
@@ -61,6 +62,25 @@ const VenueContainer = ({ data }) => (
             {
               data.viewer ? data.viewer.organization.events.edges.map((event, key) => <EventNode key={key} event={event.node} />) : null
             }
+            {
+              data.viewer ? data.viewer.organization.events.pageInfo.hasNextPage ?
+                <tr>
+                  <td
+                    colSpan={3}
+                    style={{
+                      textAlign: 'center'
+                    }}
+                  >
+                    <span
+                      className="btn btn-primary"
+                      onClick={loadMoreEvents}
+                    >
+                      Load More...
+                    </span>
+                  </td>
+                </tr>
+              : null : null
+            }
           </tbody>
         </table>
       </Panel>
@@ -69,22 +89,34 @@ const VenueContainer = ({ data }) => (
 )
 
 const Venue = gql`
-  query Venue($id: ID!) {
+  query Venue(
+    $id: ID!,
+    $lCursor: String,
+    $eCursor: String
+  ) {
     viewer {
       organization(id: $id) {
         ...VenuesContainerVenue
-        leagues {
+        leagues(after: $lCursor) {
           edges {
             node {
               ...LeaguesContainerNode
             }
           }
+          pageInfo {
+            endCursor
+            hasNextPage
+          }
         }
-        events {
+        events(first: 10, after: $eCursor) {
           edges {
             node {
               ...EventsContainerEvent
             }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
           }
         }
       }
@@ -100,5 +132,39 @@ export default graphql(Venue, {
     variables: {
       id: venueId
     }
-  })
+  }),
+  props({ data, data: { fetchMore} }) {
+    return {
+      data,
+      loadMoreEvents: () => {
+        return fetchMore({
+          query: Venue,
+          variables: {
+            eCursor: data.viewer.organization.events.pageInfo.endCursor,
+            id: data.variables.id
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const { edges: newEdges, pageInfo } = fetchMoreResult.data.viewer.organization.events;
+            return update(
+              data,
+              {
+                viewer: {
+                  organization: {
+                    events: {
+                      edges: {
+                        $push: newEdges
+                      },
+                      pageInfo: {
+                        $set: pageInfo
+                      }
+                    }
+                  }
+                }
+              }
+            )
+          }
+        })
+      }
+    }
+  }
 })(VenueContainer);

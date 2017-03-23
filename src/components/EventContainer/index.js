@@ -16,10 +16,12 @@ import {
   Link,
 } from 'react-router';
 import ResultPanel from '../ResultPanel';
+import update from 'immutability-helper';
 
 class EventContainer extends React.Component {
   render() {
     const { loading, viewer } = this.props.data;
+    const { loadMoreResults } = this.props;
     return (
       <Row>
         <div className="col-sm-12">
@@ -86,7 +88,11 @@ class EventContainer extends React.Component {
           {
             !loading
             ?
-              <ResultPanel users={viewer.event.results.edges} />
+              <ResultPanel
+                users={viewer.event.results.edges}
+                loadMoreUsers={loadMoreResults}
+                hasNextPage={viewer.event.results.pageInfo.hasNextPage}
+              />
             :
             <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
           }
@@ -97,7 +103,10 @@ class EventContainer extends React.Component {
 }
 
 const Event = gql`
-  query Event($id: ID!) {
+  query Event(
+    $id: ID!,
+    $cursor: String
+  ) {
     viewer {
       event(id: $id) {
         id
@@ -109,7 +118,7 @@ const Event = gql`
           id
           name
         }
-        results {
+        results(first: 10, after: $cursor) {
           edges {
             node {
               id
@@ -125,6 +134,10 @@ const Event = gql`
               change
             }
           }
+          pageInfo {
+            endCursor,
+            hasNextPage
+          }
         }
       }
     }
@@ -136,5 +149,39 @@ export default graphql(Event, {
     variables: {
       id: eventId
     }
-  })
+  }),
+  props({ data, data: { fetchMore } }) {
+    return {
+      data,
+      loadMoreResults: () => {
+        return fetchMore({
+          query: Event,
+          variables: {
+            cursor: data.viewer.event.results.pageInfo.endCursor,
+            id: data.variables.id
+          },
+          updateQuery: ( previousResult, { fetchMoreResult }) => {
+            const { edges: newEdges, pageInfo } = fetchMoreResult.data.viewer.event.results;
+            return update(
+              data,
+              {
+                viewer: {
+                  event: {
+                    results: {
+                      edges: {
+                        $push: newEdges
+                      },
+                      pageInfo: {
+                        $set: pageInfo
+                      }
+                    }
+                  }
+                }
+              }
+            )
+          }
+        })
+      }
+    }
+  }
 })(EventContainer);

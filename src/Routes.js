@@ -17,6 +17,8 @@ import LeaguesContainer from './components/LeaguesContainer';
 import EventsPage from './components/EventsPage';
 import EventsContainer from './components/EventsContainer';
 import EventContainer from './components/EventContainer';
+import SearchPage from './components/SearchPage';
+import SearchContainer from './components/SearchContainer';
 import DashboardPage from './components/DashboardPage';
 import NewOrganizationPage from './components/NewOrganizationsPage';
 import NewLeaguePage from './components/NewLeaguePage';
@@ -38,6 +40,9 @@ export default (
     <Route path="events" component={EventsPage}>
       <IndexRoute component={EventsContainer} />
       <Route path="/events/:eventId" component={EventContainer}/>
+    </Route>
+    <Route path="search" component={SearchPage}>
+      <IndexRoute component={SearchContainer} />
     </Route>
     <Route path="dashboard" component={RequireAuth(DashboardPage, 'organization')}>
       <IndexRoute component={RequireAuth(DashboardProfile, 'organization')} />

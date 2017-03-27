@@ -5,7 +5,7 @@ import {
 import Icon from '../Icon';
 import SearchPanel from '../SearchPanel';
 
-const SearchContainer = ({}) => (
+const SearchContainer = () => (
   <Row>
     <div className="col-sm-12">
       <h2>

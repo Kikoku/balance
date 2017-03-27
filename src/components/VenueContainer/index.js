@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Panel,
   PanelHeading,
-  PanelBody,
   Row
 } from '../Grid';
 import Icon from '../Icon';

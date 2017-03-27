@@ -3,7 +3,6 @@ import {
   Panel,
   PanelHeading,
   PanelBody,
-  ListGroup,
   InputGroup,
   InputGroupAddon
 } from '../Grid';

@@ -37,7 +37,6 @@ class LoginPage extends Component {
   }
 
   _handleSubmit(e) {
-    const self = this;
     e.preventDefault();
     this.props.mutate({
       variables: {
@@ -60,7 +59,7 @@ class LoginPage extends Component {
     })
     .then(({ data }) => {
       const { token, error } = data.login;
-      !error ? localStorage.setItem('access_token', token.access_token) : null;
+      if(!error) localStorage.setItem('access_token', token.access_token)
       this.setState({
         email: '',
         password: '',

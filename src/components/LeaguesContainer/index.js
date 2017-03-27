@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Panel,
-  PanelHeading,
   Row
 } from '../Grid';
 import Icon from '../Icon';

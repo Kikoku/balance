@@ -30,7 +30,6 @@ const getSearchNodes = (edges) => {
             </ul>
           </ListGroupItem>
         )
-        break;
       case 'Event':
         return (
           <ListGroupItem key={i}>
@@ -44,7 +43,6 @@ const getSearchNodes = (edges) => {
             </ul>
           </ListGroupItem>
         )
-        break;
       case 'League':
         return (
           <ListGroupItem key={i}>
@@ -58,7 +56,6 @@ const getSearchNodes = (edges) => {
             </ul>
           </ListGroupItem>
         )
-        break;
       case 'Organization':
         return (
           <ListGroupItem key={i}>
@@ -70,6 +67,12 @@ const getSearchNodes = (edges) => {
                 ))
               }
             </ul>
+          </ListGroupItem>
+        )
+      default:
+        return (
+          <ListGroupItem>
+            <Icon icon="frown-o"/> No results found
           </ListGroupItem>
         )
     }

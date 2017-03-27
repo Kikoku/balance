@@ -63,7 +63,7 @@ class NewEventPage extends Component {
   }
 
   _handleSubmit(e) {
-    let { event, logs, players, matches, leagueId, filename } = this.state;
+    let { event, logs, players, matches, leagueId } = this.state;
     event = {
       ...event,
       iscasuallreportonly: event.iscasuallreportonly ? event.iscasuallreportonly : false
@@ -103,7 +103,7 @@ class NewEventPage extends Component {
 
   render() {
     const { viewer } = this.props.data;
-    const { error, upload, filename, event, players, matches, leagueId, logs, uploaded } = this.state;
+    const { filename, event, players, matches, leagueId, logs, uploaded } = this.state;
     return (
       <Row>
         <div className="col-sm-12">

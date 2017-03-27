@@ -9,6 +9,7 @@ import {
 import gql from 'graphql-tag';
 import Icon from '../Icon'
 import { Link } from 'react-router';
+import update from 'immutability-helper';
 
 const getSearchNodes = (edges) => {
   return edges.map((edge, i) => {
@@ -75,7 +76,7 @@ const getSearchNodes = (edges) => {
   })
 }
 
-const SearchList = ({ query, data: { viewer } }) => {
+const SearchList = ({ query, data: { viewer }, loadMoreResults }) => {
   return (
   <ListGroup>
     {
@@ -89,13 +90,33 @@ const SearchList = ({ query, data: { viewer } }) => {
         <Icon icon="frown-o"/> No results found
       </ListGroupItem>
     }
+    {
+      viewer ?
+        viewer.search.pageInfo.hasNextPage ?
+        <ListGroupItem>
+          <span
+            className="btn btn-primary center-block"
+            onClick={loadMoreResults}
+          >
+            Load More...
+          </span>
+        </ListGroupItem>
+      : null : null
+    }
   </ListGroup>
 )}
 
 const Search = gql`
-  query Search($query: String!) {
+  query Search(
+    $query: String!,
+    $cursor: String
+  ) {
     viewer {
-      search(query: $query) {
+      search(first: 10, after: $cursor ,query: $query) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
         edges {
           node {
             ... on User {
@@ -179,5 +200,37 @@ export default graphql(Search, {
     variables: {
       query
     }
-  })
+  }),
+  props({ data, data: { loading, viewer, fetchMore } }) {
+    return {
+      data,
+      loadMoreResults: () => {
+        return fetchMore({
+          query: Search,
+          variables: {
+            cursor: viewer.search.pageInfo.endCursor,
+            query: data.variables.query
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const { edges: newEdges, pageInfo } = fetchMoreResult.data.viewer.search;
+            return update(
+              data,
+              {
+                viewer: {
+                  search: {
+                    edges: {
+                      $push: newEdges
+                    },
+                    pageInfo: {
+                      $set: pageInfo
+                    }
+                  }
+                }
+              }
+            )
+          }
+        })
+      }
+    }
+  }
 })(SearchList);

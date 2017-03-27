@@ -63,6 +63,11 @@ class NavigationBar extends Component {
                     <Icon icon="calendar" /> Events
                   </Link>
                 </li>
+                <li className={this.props.location.pathname.includes('/search') ? 'active' : ''} onClick={() => this._collapse()}>
+                  <Link to="/search">
+                    <Icon icon="search" /> Search
+                  </Link>
+                </li>
                 {
                   guest ?
                     null

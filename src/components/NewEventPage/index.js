@@ -21,7 +21,8 @@ import {
   mountNewFile
 } from './updateHelper'
 import LeagueSelect from './LeagueSelect';
-import EventNode from '../EventNode'
+import EventNode from '../EventNode';
+import Toggle from '../Toggle';
 
 class NewEventPage extends Component {
   constructor(props) {
@@ -34,7 +35,8 @@ class NewEventPage extends Component {
       players: '',
       matches: '',
       leagueId: '',
-      uploaded: ''
+      uploaded: '',
+      showCompleted: false
     }
   }
 
@@ -56,8 +58,16 @@ class NewEventPage extends Component {
     })
   }
 
+  _handleToggle() {
+    this.setState({
+      ...this.state,
+      showCompleted: !this.state.showCompleted
+    })
+  }
+
   _handleChange(e) {
     this.setState({
+      ...this.state,
       [e.target.name]: e.target.value
     })
   }
@@ -103,7 +113,7 @@ class NewEventPage extends Component {
 
   render() {
     const { viewer } = this.props.data;
-    const { filename, event, players, matches, leagueId, logs, uploaded } = this.state;
+    const { filename, event, players, matches, leagueId, logs, uploaded, showCompleted } = this.state;
     return (
       <Row>
         <div className="col-sm-12">
@@ -175,18 +185,36 @@ class NewEventPage extends Component {
                     </span>
                   </InputGroupButton>
                 </InputGroup>
-                <InputGroup>
-                  <InputGroupAddon>
-                    <Icon icon="tasks" />
-                  </InputGroupAddon>
-                  {
-                    viewer
-                    ?
-                      <LeagueSelect org={viewer} _handleChange={(e) => this._handleChange(e)}/>
-                    :
-                    <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
-                  }
-                </InputGroup>
+                <div>
+                  <div className="input-group" style={{
+                    marginBottom: 0
+                  }}>
+                    <InputGroupAddon>
+                      <Icon icon="tasks" />
+                    </InputGroupAddon>
+                    {
+                      viewer
+                      ?
+                        <LeagueSelect
+                          org={viewer}
+                          showCompleted={showCompleted}
+                          _handleChange={(e) => this._handleChange(e)}
+                        />
+                      :
+                      <i className="fa fa-spinner fa-spin fa-3x fa-fw></i>" />
+                    }
+                  </div>
+                  <span style={{
+                    color: '#555'
+                  }}>
+                    <Toggle
+                      toggled={showCompleted}
+                      handleToggle={() => this._handleToggle()}
+                    >
+                      Show Completed?
+                    </Toggle>
+                  </span>
+                </div>
                 <InputGroup>
                   <InputGroupAddon>
                     <Icon icon="font" />

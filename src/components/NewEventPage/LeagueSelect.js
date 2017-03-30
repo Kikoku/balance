@@ -22,7 +22,7 @@ class LeagueSelect extends Component {
 
   render() {
     const { data, _handleChange } = this.props;
-    const { selected } = this.state;
+    const { selected, showCompleted } = this.state;
     return (
       data.node
       ?
@@ -56,11 +56,12 @@ class LeagueSelect extends Component {
 
 const CurrentOrgLeaguesForLayout = gql`
   query CurrentOrgLeaguesForLayout(
-    $orgId: ID!
+    $orgId: ID!,
+    $showCompleted: Boolean
   ) {
     node(id:$orgId) {
       ... on Organization {
-        leagues {
+        leagues(showCompleted: $showCompleted) {
           edges {
             node {
               id
@@ -79,7 +80,8 @@ export default graphql(CurrentOrgLeaguesForLayout, {
   options(props) {
     return {
       variables: {
-        orgId: props.org.id
+        orgId: props.org.id,
+        showCompleted: props.showCompleted
       },
       forceFetch: true
     }

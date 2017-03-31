@@ -32,6 +32,29 @@ const VenueContainer = ({ data, loadMoreEvents }) => (
       </h2>
     </div>
     <div className="col-sm-12">
+      <div className="well">
+        {data.loading ? <tr><td>Loading</td></tr> : null }
+        {
+          data.viewer
+          ?
+            <Row>
+              <div className="col-sm-6">
+                <strong><Icon icon="map-marker" /> Location</strong><br />
+                {data.viewer.organization.street}<br />
+                {data.viewer.organization.city}, {data.viewer.organization.state}<br />
+                {data.viewer.organization.zip}
+              </div>
+              <div className="col-sm-6">
+                <strong>Contact</strong><br />
+                <Icon icon="phone"/>: <a href={`tel:${data.viewer.organization.phone}`}>{data.viewer.organization.phone}</a><br />
+                <Icon icon="envelope-o"/>: <a href={`mailto:${data.viewer.organization.email}`}>{data.viewer.organization.email}</a>
+              </div>
+            </Row>
+          : null
+        }
+      </div>
+    </div>
+    <div className="col-sm-12">
       <LeaguesPanel
         loading={data.loading}
         error={data.error}
@@ -96,6 +119,11 @@ const Venue = gql`
     viewer {
       organization(id: $id) {
         ...VenuesContainerVenue
+        street
+        city
+        state
+        zip
+        phone
         leagues(after: $lCursor) {
           edges {
             node {
